@@ -74,9 +74,6 @@ const MapComponent = ({ active3d }) => {
 
         const ol3d = new OLCesium({
             map: map,
-            time() {
-                return window.Cesium.JulianDate.now();
-            },
         });
         setOlcs3d(ol3d);
         const scene = ol3d.getCesiumScene();
