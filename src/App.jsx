@@ -9,10 +9,7 @@ function App() {
     return (
         <div className="flex flex-col h-[100svh] w-full">
             <Header setActive3d={setActive3d} />
-            <MapComponent
-                active3d={active3d}
-                setActive3d={setActive3d}
-            />
+            <MapComponent active3d={active3d} />
         </div>
     );
 }

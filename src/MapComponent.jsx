@@ -24,7 +24,7 @@ const mapView = new View({
     smoothExtentConstraint: true,
 });
 
-const MapComponent = ({ active3d, setActive3d }) => {
+const MapComponent = ({ active3d }) => {
     const [map, setMap] = useState();
     const mapElement = useRef();
     const mapRef = useRef();
