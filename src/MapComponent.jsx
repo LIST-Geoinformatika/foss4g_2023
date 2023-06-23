@@ -9,6 +9,8 @@ import "cesium/Build/Cesium/Widgets/widgets.css";
 window.Cesium = Cesium;
 import OLCesium from "olcs/OLCesium.js";
 import AreaPolygon from "./AreaPolygon";
+import Measure3D from "./Measure3D";
+import Measure2D from "./Measure2D";
 
 const mapViewParams = {
     projection: "EPSG:3857",
@@ -24,7 +26,7 @@ const mapView = new View({
     smoothExtentConstraint: true,
 });
 
-const MapComponent = ({ active3d }) => {
+const MapComponent = ({ active3d, measureActive }) => {
     const [map, setMap] = useState();
     const mapElement = useRef();
     const mapRef = useRef();
@@ -109,6 +111,11 @@ const MapComponent = ({ active3d }) => {
                 className="h-full w-full"
             ></div>
             <AreaPolygon map={map} />
+            <Measure3D
+                olcs3d={olcs3d}
+                measureActive={measureActive}
+            />
+            {measureActive && <Measure2D map={map} />}
         </>
     );
 };
