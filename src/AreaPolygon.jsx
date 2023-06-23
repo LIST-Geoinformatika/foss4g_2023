@@ -1,4 +1,3 @@
-import { Feature } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import React, { useEffect } from "react";
