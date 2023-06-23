@@ -4,6 +4,12 @@ import TileLayer from "ol/layer/Tile";
 import { OSM, TileWMS } from "ol/source";
 import { fromLonLat, transformExtent } from "ol/proj";
 
+import * as Cesium from "cesium";
+import "cesium/Build/Cesium/Widgets/widgets.css";
+window.Cesium = Cesium;
+import OLCesium from "olcs/OLCesium.js";
+import AreaPolygon from "./AreaPolygon";
+
 const mapViewParams = {
     projection: "EPSG:3857",
     center: fromLonLat([16.450145, 44.515856]),
@@ -18,10 +24,13 @@ const mapView = new View({
     smoothExtentConstraint: true,
 });
 
-const MapComponent = () => {
+const MapComponent = ({ active3d, setActive3d }) => {
     const [map, setMap] = useState();
     const mapElement = useRef();
     const mapRef = useRef();
+
+    // OLCS 3D states
+    const [olcs3d, setOlcs3d] = useState();
 
     useEffect(() => {
         if (mapRef.current || !mapElement.current) return;
@@ -59,6 +68,42 @@ const MapComponent = () => {
         };
     }, [map, mapElement]);
 
+    // Adding OLCS to map
+    useEffect(() => {
+        if (!map) return;
+
+        const ol3d = new OLCesium({
+            map: map,
+            time() {
+                return window.Cesium.JulianDate.now();
+            },
+        });
+        setOlcs3d(ol3d);
+        const scene = ol3d.getCesiumScene();
+
+        scene.terrainProvider = Cesium.createWorldTerrain();
+
+        const tileSet3DSource = new Cesium.Cesium3DTileset({
+            url: "https://tiling.listlabs.net/3d-tiles/cesium/e0dfcdb6-d400-4d02-b9fe-962e8eda5095/tiles/tileset.json",
+            maximumScreenSpaceError: 16,
+            skipLevelOfDetail: true,
+            baseScreenSpaceError: 1024,
+        });
+
+        const tileset = scene.primitives.add(tileSet3DSource);
+        tileset.pointCloudShading.maximumAttenuation = undefined;
+        tileset.pointCloudShading.baseResolution = undefined;
+        tileset.pointCloudShading.geometricErrorScale = 1;
+        tileset.pointCloudShading.attenuation = true;
+        tileset.pointCloudShading.eyeDomeLighting = true;
+    }, [map]);
+
+    useEffect(() => {
+        if (!olcs3d) return;
+
+        olcs3d.setEnabled(active3d);
+    }, [active3d, olcs3d]);
+
     return (
         <>
             <div
@@ -66,6 +111,7 @@ const MapComponent = () => {
                 ref={mapElement}
                 className="h-full w-full"
             ></div>
+            <AreaPolygon map={map} />
         </>
     );
 };

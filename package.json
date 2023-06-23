@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cesium": "^1.106.1",
     "ol": "^7.4.0",
+    "olcs": "^2.14.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -25,6 +27,7 @@
     "eslint-plugin-react-refresh": "^0.3.4",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "vite-plugin-cesium": "^1.2.22"
   }
 }
