@@ -5,8 +5,8 @@ import Header from "./Header";
 
 function App() {
     return (
-        <div className="flex flex-col h-[100svh] w-full">  
-            <Header/>
+        <div className="flex flex-col h-[100svh] w-full">
+            <Header />
             <MapComponent />
         </div>
     );
