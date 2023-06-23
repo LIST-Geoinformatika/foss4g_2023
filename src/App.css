@@ -1,42 +1,73 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* OpenLayers default overrides */
+
+.ol-control {
+    position: absolute;
+    /* background-color: rgba(255, 255, 255, 0.4); */
+    border-radius: 4px;
+    padding: 2px;
+    right: 10px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ol-control button {
+    background-color: #171717;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-weight: bolder;
+    font-size: 28px;
+    font-family: initial;
+    margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.ol-control.ol-zoom {
+    background: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    top: 50%;
 }
 
-.card {
-  padding: 2em;
+.ol-control.ol-zoom button {
+    background-color: #171717;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-weight: bolder;
+    font-size: 28px;
+    font-family: initial;
 }
 
-.read-the-docs {
-  color: #888;
+.ol-control button:focus {
+    outline: none;
+}
+
+.ol-control button:hover {
+    outline: none;
+}
+
+.ol-attribution {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    background-color: white;
+    padding: 4px;
+}
+
+.ol-attribution button {
+    display: none;
+}
+
+.ol-scale-line {
+    bottom: 25px;
+    right: 18px;
+    left: unset;
+    position: inherit;
+}
+
+.ol-rotate {
+    top: 10px;
 }
