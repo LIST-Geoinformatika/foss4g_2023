@@ -192,6 +192,7 @@ const Measure2D = ({ map }) => {
                 <MeasuredFeature
                     key={`measured-feature-${idx}`}
                     feature={feature}
+                    map={map}
                 />
             ))}
         </div>
