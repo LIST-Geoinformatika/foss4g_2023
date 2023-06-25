@@ -36,7 +36,7 @@ We can use a Node installer to install both Node.js and npm on our system.
 
 -   Node.js installer -> <https://nodejs.org/en/download> (OS X or Windows users)
 
--   NodeSource installer -> <https://github.com/nodesource/distributions> (Linux users)
+-   NodeSource installer -> <https://github.com/nodesource/distributions> (Linux users, you can also use package manager to install this)
 
 Be sure to install the version labeled LTS. Other versions have not yet been tested with npm. If you need help with installation, the following links provide detailed instructions for each operating system:
 
@@ -119,7 +119,7 @@ When it comes to web GIS applications, Tailwind CSS offers several benefits:
 
 3.  Consistent design language: Web GIS applications often involve multiple components, maps, and data visualizations. Tailwind CSS's utility classes ensure a consistent design language throughout the application. This uniformity enhances the user experience and makes it easier for developers to maintain a coherent visual style across various GIS elements.
 
-4.  Responsive design: Web GIS applications need to adapt to different screen sizes and devices. Tailwind CSS provides responsive utilities that allow for straightforward handling of different breakpoints and screen orientations. With responsive classes like sm, md, lg, developers can easily create layouts that respond to different screen sizes, ensuring a seamless experience across devices.
+4.  Responsive design: Web GIS applications need to adapt to different screen sizes and devices. Tailwind CSS provides responsive utilities that allow for straightforward handling of different breakpoints and screen orientations. With responsive classes like `sm`, `md`, `lg`, developers can easily create layouts that respond to different screen sizes, ensuring a seamless experience across devices.
 
 5.  Efficiency and performance: Tailwind CSS follows a utility-first approach, which means only the required styles are included in the final CSS output. This approach eliminates unnecessary bloat and reduces the overall file size of the CSS, resulting in faster load times and improved performance for web GIS applications.
 
@@ -146,7 +146,7 @@ export default { 
     extend: {}, 
  },  
     plugins: [], 
- }`
+ }
 ```
 
 **Step 3:** Add the @tailwind directives for each of Tailwind’s layers to your ./src/index.css file:
@@ -158,8 +158,9 @@ export default { 
 
 ```
 
-**Step 4:** Run your build process with npm run dev in Terminal.
-**Step 5** Now you can start using Tailwind’s utility classes to style your content!
+**Step 4:** Run your build process with `npm run dev` in Terminal.
+
+**Step 5:** Now you can start using Tailwind’s utility classes to style your content!
 
 If you have problems with the installation, you can find more information here: <https://tailwindcss.com/docs/guides/vite>.
 
@@ -183,7 +184,7 @@ Key features of OpenLayers for web GIS applications include:
 
 To add OpenLayers to our project, please add OpenLayers npm package to the project with
 
--   `Npm install ol`
+-   `npm install ol`
 
 Now that we have installed all the necessary packages, we are ready for the next step in which we will create the map and add the header component.
 
@@ -258,8 +259,8 @@ const mapView = new View({
 });
 ```
 
--   ...mapViewParams spreads the properties from mapViewParams into the View constructor, setting up the initial view configuration,
--   smoothExtentConstraint enables smooth extent constraint, ensuring that the map does not display areas outside the specified extent.
+-   `...mapViewParams` spreads the properties from mapViewParams into the View constructor, setting up the initial view configuration,
+-   `smoothExtentConstraint` enables smooth extent constraint, ensuring that the map does not display areas outside the specified extent.
 
 Now we can create a MapComponent functional component:
 
@@ -270,8 +271,8 @@ const MapComponent = () => {
     const mapRef = useRef();
 ```
 
--   map and setMap are created using the useState hook. map represents the map instance, and setMap is used to update its value,
--   mapElement and mapRef are created using the useRef hook. mapElement is used to reference the div element that will contain the map, while mapRef stores the map instance created with OpenLayers.
+-   `map` and `setMap` are created using the `useState` hook. `map` represents the map instance, and `setMap` is used to update its value,
+-   `mapElement` and `mapRef` are created using the `useRef` hook. `mapElement` is used to reference the div element that will contain the map, while `mapRef` stores the map instance created with OpenLayers.
 
 ```
 useEffect(() => {
@@ -304,13 +305,13 @@ useEffect(() => {
     }, [map, mapElement]);
 ```
 
--   This useEffect hook is responsible for creating and initializing the map when the component mounts or when the map or mapElement dependencies change,
--   If mapRef.current exists or mapElement.current is falsy, the effect is skipped,
--   An OSM source is created using new OSM(),
--   The Map instance is created using new Map and assigned to mapRef.current,
--   The map is configured with a target element (mapElement.current), an array of layers (including an OSM tile layer and a WMS tile layer), and the view (mapView),
--   If mapRef.current is truthy (i.e., the map instance is successfully created), setMap is called to update the map state,
--   An empty cleanup function is returned to ensure any necessary cleanup is performed.
+-   This useEffect hook is responsible for creating and initializing the map when the component mounts or when the `map` or `mapElement` dependencies change,
+-   If `mapRef.current` exists or `mapElement.current` is falsy, the effect is skipped so that we don't end up with two maps because of React strict mode,
+-   An OSM source is created using new `OSM()`,
+-   The Map instance is created using new `Map` constructor and assigned to `mapRef.current`,
+-   The map is configured with a target element (`mapElement.current`), an array of layers (including an OSM tile layer and a WMS tile layer), and the view (`mapView`),
+-   If `mapRef.current` is truthy (i.e., the map instance is successfully created), `setMap` is called to update the `map` state and save instance for later use,
+-   If there is a need to add cleanup function on component unmount we can define it inside the return function. For now it is left empty.
 
 ```
 return (
@@ -326,9 +327,9 @@ return (
 ```
 
 -   This renders the JSX markup for the MapComponent component.
--   The div element represents the container for the map and has an id of "map".
--   The ref attribute is set to mapElement to reference this div element.
--   The className is set to "h-full w-full" to apply CSS classes for styling.
+-   The div element represents the container for the map and has an `id` of "map".
+-   The `ref` attribute is set to mapElement to reference this div element.
+-   The `className` is set to `h-full w-full` to apply CSS classes for styling.
 
 Finally, let's export the component as the default export of the module, making it available for import and use in other files.
 
@@ -342,7 +343,23 @@ To quickly start using Cesium with React and OpenLayers, it's easiest to use OL-
 
 Installing Cesium with React can be somewhat complex, but Vite plugins help to get you going in no time!
 
-First, install Cesium as a dependency by running the command `npm install cesium` or `yarn add cesium`. Then, install the Vite Cesium plugin by running the command `npm install vite-plugin-cesium` or `yarn add vite-plugin-cesium`. Finally, configure your Vite project by updating the Vite configuration file (vite.config.js) to include the Cesium plugin as a plugin option, ensuring that Cesium's assets are properly handled and loaded in your application. Simply import cesium from "vite-plugin-cesium" and add it to array of plugins for Vite to load. Note we're already using react plugin for Vite, so append cesium after that!
+First, install Cesium as a dependency by running the command
+
+```
+npm install cesium
+or
+yarn add cesium
+```
+
+Then, install the Vite Cesium plugin by running the command
+
+```
+npm install vite-plugin-cesium
+or
+yarn add vite-plugin-cesium
+```
+
+Finally, configure your Vite project by updating the Vite configuration file (_vite.config.js_) to include the Cesium plugin as a plugin option, ensuring that Cesium's assets are properly handled and loaded in your application. Simply import cesium from `vite-plugin-cesium` and add it to array of plugins for Vite to load. Note we're already using react plugin for Vite, so append cesium after that!
 
 https://github.com/nshen/vite-plugin-cesium
 
@@ -360,7 +377,15 @@ plugins: [react(), cesium()],
 
 ```
 
-And that would be it if you were only using Cesium in your application. You can simply add OL-Cesium as a separate dependency by running the command "npm install olcs" or "yarn add olcs" in your project directory. OL-Cesium requires you to do some extra steps for a full setup. It is important to note that Cesium is accessed through the global `window.Cesium` object while OpenLayers is accessed through ES6 imports. This is mostly due to legacy reasons, so we must expose Cesium through `window` variable to use this library.
+And that would be it if you were only using Cesium in your application. You can simply add OL-Cesium as a separate dependency by running the command
+
+```
+npm install olcs
+or
+yarn add olcs
+```
+
+in your project directory. OL-Cesium requires you to do some extra steps for a full setup. It is important to note that Cesium is accessed through the global `window.Cesium` object while OpenLayers is accessed through ES6 imports. This is mostly due to legacy reasons, so we must expose Cesium through `window` variable to use this library.
 
 On top of your JSX files where you would usually import your components/libraries/etc., import Cesium, Cesium widgets and OLCesium like this:
 
@@ -373,7 +398,7 @@ import OLCesium from "olcs/OLCesium.js";
 
 Everything is now configured to use the full potential of Cesium and OpenLayers in your web apps.
 
-If your app is meant to be used both in 2D and 3D mode, it is best to initially load your map in 2D, initialize cesium (3D) right away, and toggle between modes using a button and calling `setEnabled()` method on declared OLCesium 3d handler.
+If your app is meant to be used both in 2D and 3D mode, it is best to initially load your map in 2D, initialize cesium (3D) right away, and toggle between modes using a button and calling `setEnabled()` method on declared OLCesium 3D handler.
 
 First, we will connect to a 3D button defined in `<Header />` component so we can toggle between 2D and 3D. It would be best to connect to this button through React Context API or state management library of your choice. Since this is only a demo app, and workshop time is limited, we will implement useState in our `<App />` component, since it is a parent component both of `<MapComponent />` and `<Header />`.
 
@@ -389,9 +414,9 @@ return (
 
 ```
 
-As you can see, we pass useState value and “setter” function to our child components as props.
+As you can see, we pass `useState` value and “setter” function to our child components as props.
 
-In Header component we can add onClick handler to our button that will simply toggle between true and false values (negating previous value):
+In Header component we can add `onClick` handler to our button that will simply toggle between true and false values (negating previous value):
 
 ```
 <button onClick={() => setActive3d((prev) => !prev)}
@@ -400,15 +425,15 @@ className="rounded-full w-9 h-9 bg-cyan-500 text-white hover:bg-cyan-400"
 
 ```
 
-Remember to destructure props (setActive3d) in react function.
+Remember to destructure props (`setActive3d`) in react function.
 
 ` const Header = ({ setActive3d }) => { ...`
 
 Do the similar destructuring in MapComponent, this time only value from useState is needed!
 
-For better understanding of what goes on in OL-Cesium and toggling between modes we will define two useEffect functions. First will initialize 3d map from 2d map and save it in a state so we can access it, while second useEffect will toggle between modes.
+For better understanding of what goes on in OL-Cesium and toggling between modes we will define two useEffect functions. First function will initialize 3D map from 2D map and save it in a state so we can access it, while second useEffect will toggle between modes.
 
-First useEffect takes map as its only dependency. This is because we need to wait for the 2D map to load before we can implement 3D view. If there is no map instance saved, we need to skip rest, so add an if statement on top of function. Now it’s time to instantiate a new OLCesium object and give it a reference to our 2D map.
+First useEffect takes map as its only dependency. This is because we need to wait for the 2D map to load before we can implement 3D view. If there is no map instance saved, we need to skip the rest, so add an if statement on top of function. Now it’s time to instantiate a new OLCesium object and give it a reference to our 2D map.
 
 ```
 const ol3d = new OLCesium({
@@ -419,7 +444,7 @@ const ol3d = new OLCesium({
 
 Same as with map, we can save this object to a React state for later use and manipulation. Save it to `olcs3d` using setState function.
 
-At this point we have a functional 3d viewer in our application. Although, you can’t access it because our on/off state for toggling between 2D and 3D is not yet connected, so let's do this part first.
+At this point we have a functional 3D viewer in our application. Although, you can’t access it because our on/off state for toggling between 2D and 3D is not yet connected, so let's do this part first.
 
 This is where our second useEffect comes into play. Define a new useEffect just below the first one which will depend on two variables: `active3d` and `olcs3d` (2D/3D state and our OLCS instance). This useEffect is very simple, it reacts to a toggling action and enables/disables 3D in our map:
 
@@ -448,7 +473,7 @@ Cesium supports various types of input data, enabling developers to create rich 
 
 Since 3D Tiles are one the most popular forms of loading data into Cesium viewer, we will import our dataset right on the map and display it in 3D. For this workshop you will be using a tileset provided by the authors. This tileset was generated from a point cloud survey of a small gravel quarry lake near Zagreb. Usually, you would upload your data to a Cesium Ion cloud, process it, and then load it right into view using your Cesium Ion token and asset id. In this example, we show that it's possible to use open-source software to achieve the same result. The whole process is out of scope for this workshop, but working tileset is served from our own server at: <https://tiling.listlabs.net/3d-tiles/cesium/e0dfcdb6-d400-4d02-b9fe-962e8eda5095/tiles/tileset.json>
 
-In our first useEffect, we can load our 3DTileset by instantiating a new object from Cesium3DTileset class with few parameters. These parameters are further explained below.
+In our first useEffect, we can load our 3DTileset by instantiating a new object from `Cesium3DTileset` class with few parameters. These parameters are further explained below.
 
 ```
 const tileSet3DSource = new Cesium.Cesium3DTileset({
@@ -475,7 +500,7 @@ tileset.pointCloudShading.eyeDomeLighting = true;
 
 **baseScreenSpaceError**: This sets the base screen space error for the 3D tiles. It defines the desired level of detail when the viewer is at the default height (eye level) above the tiles. A lower value results in higher detail at the default height.
 
-The following parameters are specific to the tileset.pointCloudShading object, which provides control over the visual appearance of the point cloud:
+The following parameters are specific to the `tileset.pointCloudShading` object, which provides control over the visual appearance of the point cloud:
 
 **maximumAttenuation**: This parameter sets the maximum attenuation value for point cloud shading. It controls how much the point cloud appearance fades based on distance from the viewer. When set to undefined, the maximum attenuation is determined automatically.
 
@@ -503,45 +528,50 @@ const wkt =
 
 ```
 
-When using OpenLayers in React without some wrapper, it is best to keep logic in useEffect since OL and React have fundamentally different way of interacting with their respective APIs. React follows a declarative approach, where developers describe the desired UI state, and React handles the updates. This abstraction simplifies UI development by removing the need for manual DOM manipulation. In contrast, OpenLayers utilizes an imperative API, enabling developers to directly manipulate the map and its elements. This approach grants fine-grained control over map layers and interactions, allowing precise customization based on specific requirements. While React focuses on abstracting UI complexity, OpenLayers offers direct control for detailed map manipulation and customization. Currently, the preferred way of connecting the two libraries is by embedding most of OL logic into useEffect functions (even though there is a lot more to discuss on this topic, it is good enough for most use cases).
+When using OpenLayers in React without some wrapper, it is best to keep logic in useEffect hook since OL and React have fundamentally different way of interacting with their respective APIs. React follows a declarative approach, where developers describe the desired UI state, and React handles the updates. This abstraction simplifies UI development by removing the need for manual DOM manipulation. In contrast, OpenLayers utilizes an imperative API, enabling developers to directly manipulate the map and its elements. This approach grants fine-grained control over map layers and interactions, allowing precise customization based on specific requirements. While React focuses on abstracting UI complexity, OpenLayers offers direct control for detailed map manipulation and customization. Currently, the preferred way of connecting the two libraries is by embedding most of OL logic into useEffect functions (even though there is a lot more to discuss on this topic, it is good enough for most use cases).
 
-Our new component must have access to a map instance. Therefore, it needs to be passed as a prop from a parent component. Now we can define a useEffect that depends on this map. Inside the function first make sure that map is properly loaded and then define a new WKT format since our data is stored that way. After that, transform the geometry of this data to EPSG:3857 since we will be using this reference system in this workshop (mainly because of measurements in later steps). OL requires us to define two instances. First is a VectorSource that holds the data, and the second one is VectorLayer that is a visual representation on the map itself. Your component should look something like this:
+Our new component must have access to a map instance. Therefore, it needs to be passed as a prop from a parent component. Now we can define a useEffect that depends on this map. Inside the function first make sure that map is properly loaded and then define a new `WKT` format since our data is stored that way. After that, transform the geometry of this data to `EPSG:3857` since we will be using this reference system in this workshop (mainly because of measurements in later steps). OL requires us to define two instances. First is a VectorSource that holds the data, and the second one is VectorLayer that is a visual representation on the map itself. Your component should look something like this:
 
 ``` 
+const AreaPolygon = ({ map }) => {
+    useEffect(() => {
+        if (!map) return;
 
-const  AreaPolygon  = ({ map }) => { 
-    useEffect(() => { 
-        if (!map) return; 
-        const  format  =  new  WKT(); 
-        const  newFeature  =  format.readFeature(wkt); 
-        newFeature.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
-        const  vectorSource  =  new  VectorSource({ 
-    features: [newFeature], 
-}); 
+        const format = new WKT();
 
-const  areaLayer  =  new  VectorLayer({ 
-source:  vectorSource, 
-zIndex:  80, 
-style:  new  Style({ 
-fill:  new  Fill({ 
-color:  "#FFBD3388", 
-}), 
+        const newFeature = format.readFeature(wkt);
+        newFeature.getGeometry().transform("EPSG:4326", "EPSG:3857");
 
-stroke:  new  Stroke({ 
-color:  "blue", 
-width:  3, 
-}), 
-}), 
-});
+        const vectorSource = new VectorSource({
+            features: [newFeature],
+        });
 
-map.addLayer(areaLayer); 
-return () => { 
-vectorSource.clear(); 
-map.removeLayer(areaLayer); 
-}; 
+        const areaLayer = new VectorLayer({
+            source: vectorSource,
+            zIndex: 80,
+            properties: {
+                altitudeMode: "clampToGround",
+            },
+            style: new Style({
+                fill: new Fill({
+                    color: "#FFBD3388",
+                }),
+                stroke: new Stroke({
+                    color: "blue",
+                    width: 3,
+                }),
+            }),
+        });
 
-}, [map]); 
-return  null; 
+        map.addLayer(areaLayer);
+
+        return () => {
+            vectorSource.clear();
+            map.removeLayer(areaLayer);
+        };
+    }, [map]);
+
+    return null;
 }; 
 
 ```
@@ -564,15 +594,15 @@ Now, our 2D and 3D views are finished, and everything is displayed nicely!
 
 ## Step 4
 
-In the last step of this workshop we will implement measure tool both in 2D and 3D. This last step is somewhat complex but this workshop is aimed to cover some advanced usecases. We will to cover concepts in this section as best as we can, but always feel free to ask questions either during or after the workshop.
+In the last step of this workshop we will implement measure tool both in 2D and 3D. This last step is somewhat complex but this workshop is aimed to cover some advanced usecases. We will try to cover concepts in this section as best as we can, but always feel free to ask questions either during or after the workshop.
 
 ### Distance measure
 
 We will start this part by connecting our second button in the header to the rest of the app. You can create new React state using same logic used for toggling between 2D/3D view. We will call this state `measureActive`. We will pass this state down to `<Header />` and `<MapInstance />`. In header the same logic applies as with previous button. In MapComponent we will first implement 2D measure and activate it using our created state.
 
-Let's create a new React component named `<Measure2d />`. To demonstrate the best practise on using React components with OpenLayers, we will toggle this component using conditional rendering paradigm often used in React. In curly brackets first add a value that can be evaluated as truthy followed by double `&&` sign, and ond the right side the component which needs to be toggled on/off is loaded (in our case `<Measure2d />`). This will add/remove 2D measure from our app depending on the state of `measureActive`. Remember to pass map as a prop to this component!
+Let's create a new React component named `<Measure2d />`. To demonstrate the best practice on using React components with OpenLayers, we will toggle this component using conditional rendering paradigm often used in React. In curly brackets first add a value that can be evaluated as truthy followed by double `&&` sign, and on the right side the component which needs to be toggled on/off is loaded (in our case `<Measure2d />`). This will add/remove 2D measure from our app depending on the state of `measureActive`. Remember to pass map as a prop to this component!
 
-Inside our new component we need a single useEffect function that can take an empty dependency array (or `map`, but it's almost impossible to trigger measure before map is loaded so it is not neccessary). This function will create a temporary `VectorSource` and `VecotLayer` for storing measured features, as well as add drawing interaction on map.
+Inside our new component we need a single useEffect function that can take an empty dependency array (or `map`, but it's almost impossible to trigger measure before map is loaded so it is not necessary). This function will create a temporary `VectorSource` and `VectorLayer` for storing measured features, as well as add drawing interaction on map.
 
 For styling your layer use this function (explaining it is a bit outside of scope for this workshop, but if you are interested feel free to ask more):
 
@@ -664,7 +694,7 @@ const helpTooltip = useRef(null);
 const measureTooltip = useRef(null);
 ```
 
-We need to listen to few draw interaction events to make our measure functional. Most important are `drawstart` and `drawend` let's define a callbac function for the first one since it's a bit more complex:
+We need to listen to few draw interaction events to make our measure functional. Most important are `drawstart` and `drawend` let's define a callback function for the first one since it's a bit more complex:
 
 ```
 const drawStartHandler = (evt, measureTooltipOverlay, sketch) => {
@@ -679,7 +709,7 @@ const drawStartHandler = (evt, measureTooltipOverlay, sketch) => {
     };
 ```
 
-The function drawStartHandler is triggered when a draw event starts in OpenLayers. It displays a measure tooltip overlay and attaches a change event listener to the sketch geometry, which calls the sketchGeomChangeHandler function when the geometry changes.
+The function `drawStartHandler` is triggered when a draw event starts in OpenLayers. It displays a measure tooltip overlay and attaches a change event listener to the sketch geometry, which calls the `sketchGeomChangeHandler` function when the geometry changes.
 
 Let's now move our overlay on map as we move our cursor:
 
@@ -696,9 +726,9 @@ const sketchGeomChangeHandler = (evt, measureTooltipOverlay) => {
     };
 ```
 
-The sketchGeomChangeHandler function is called when there is a change in the sketch geometry. It retrieves the updated geometry, formats its length using the `formatLength` function, updates the measure tooltip with the formatted output, and positions the measure tooltip overlay at the last coordinate of the geometry.
+The `sketchGeomChangeHandler` function is called when there is a change in the sketch geometry. It retrieves the updated geometry, formats its length using the `formatLength` function, updates the measure tooltip with the formatted output, and positions the measure tooltip overlay at the last coordinate of the geometry.
 
-The `formatLength` helper function takes a line geometry as input and calculates its length. If the length is greater than 100 meters, it returns the length in kilometers rounded to two decimal places with the "km" unit. Otherwise, it returns the length in meters rounded to two decimal places with the "m" unit. You can copy/paste it from here, but let's keep it undefined for now since we are going to define it later in a child component (or even better in a separate file allthogether).
+The `formatLength` helper function takes a line geometry as input and calculates its length. If the length is greater than 100 meters, it returns the length in kilometers rounded to two decimal places with the "km" unit. Otherwise, it returns the length in meters rounded to two decimal places with the "m" unit. You can copy/paste it from here, but let's keep it undefined for now since we are going to define it later in a child component (or even better in a separate file althogether).
 
 ```
 import { getLength } from "ol/sphere";
@@ -729,7 +759,7 @@ const drawEnd = draw.on("drawend", () => {
 
 On end of drawing operation, this function hides the measure tooltip by setting its display style to "none" and sets the sketch variable to null.
 
-Now lets go back to our overlays. Since we want to enable more than one measurement on the map, it would be nice to add an overlay on each measured feature. Lets start by adding a state that will hold our features in an array.
+Now let's go back to our overlays. Since we want to enable more than one measurement on the map, it would be nice to add an overlay on each measured feature. Let's start by adding a state that will hold our features in an array.
 
 ```
 const [measuredFeatures, setMeasuredFeatures] = useState([]);
@@ -822,7 +852,7 @@ export default MeasuredFeature;
 ```
 
 Notice we loaded our `formatLength`, here since it is used in this component also. As mentioned previously, you can define it wherever you want!
-Detailed explanation of this component is out of scope for this workshop, but in short this React component creates a DOM element (displayRef.current) to display the measured feature. In the useEffect hook, it creates an OpenLayers overlay (drawnOverlay) with the provided element and positions it on the map based on the feature's geometry. The feature's length is calculated using the formatLength function and displayed in the DOM element. The overlay is added to the map, and when the component is unmounted, the overlay is removed from the map. Finally, the component returns a `<div>` element with a reference to displayRef, which will be used to display the measured feature length.
+Detailed explanation of this component is out of scope for this workshop, but in short this React component creates a DOM element (displayRef.current) to display the measured feature. In the useEffect hook, it creates an OpenLayers overlay (`drawnOverlay`) with the provided element and positions it on the map based on the feature's geometry. The feature's length is calculated using the `formatLength` function and displayed in the DOM element. The overlay is added to the map, and when the component is unmounted, the overlay is removed from the map. Finally, the component returns a `<div>` element with a reference to `displayRef`, which will be used to display the measured feature length.
 
 At the end remember to define a cleanup function for the useEffect. Try to do this yourself (or take a peek at the full code in step-4 branch).
 
@@ -830,23 +860,27 @@ Now if everything went well measure should be triggered using a button and you s
 
 ## 3D Measure
 
-Measuring in 3D if a far more complex operation than a simple measure in 2D space. This operation has to be implemented using Cesium.js which by itself is a very complex library that would require this workshop to be split acros multiple days. We have provided you with a very simple measure that works in 3D and we will explain some basic concepts on how to do this live during the workshop.
+Measuring in 3D is a far more complex operation than a simple measure in 2D space. This operation has to be implemented using Cesium.js which by itself is a very complex library that would require this workshop to be split across multiple days. We have provided you with a very simple measure that works in 3D and we will explain some basic concepts on how to do this live during the workshop.
 
-Feel free to save your code localy using git and check out to branch `step-4` and open the file `Measure3D`.
+Feel free to save your code locally using git and checkout to branch `step-4` and open the file `Measure3D`.
+
+```
+git checkout step-4
+```
 
 The Measure3D component is a React component that utilizes the Cesium library for 3D visualization and enables distance measurement in a Cesium viewer.
 
 Inside the component, there are several variables declared to manage different elements used for measurement, such as points, polylines, and labels. These elements are added to the Cesium scene to visualize the measured distances.
 
-The addHandler function sets up event handling for measuring distances. It creates point primitives and polyline primitives based on user interactions. It also calculates and displays distance labels for the measured distances.
+The `addHandler` function sets up event handling for measuring distances. It creates point primitives and polyline primitives based on user interactions. It also calculates and displays distance labels for the measured distances.
 
-There are helper functions like getDistanceString, getVerticalDistanceString, and addDistanceLabel that handle the calculations and display of distances and labels. These functions make use of Cesium's geodesic calculations and cartographic conversions to determine distances in meters or kilometers.
+There are helper functions like `getDistanceString`, `getVerticalDistanceString`, and `addDistanceLabel` that handle the calculations and display of distances and labels. These functions make use of Cesium's geodesic calculations and cartographic conversions to determine distances in meters or kilometers.
 
-The inputAction function is triggered when the user left-clicks on the viewer. It detects the clicked position in the scene, adds points to the primitives collection, and creates polylines based on the added points. It also updates the distance labels accordingly.
+The `inputAction` function is triggered when the user left-clicks on the viewer. It detects the clicked position in the scene, adds points to the primitives collection, and creates polylines based on the added points. It also updates the distance labels accordingly.
 
-The removeMeasure function is responsible for cleaning up the added primitives and labels when the measurement is no longer active or the component is unmounted. It removes the points, polylines, and labels from the Cesium scene.
+The `removeMeasure` function is responsible for cleaning up the added primitives and labels when the measurement is no longer active, or the component is unmounted. It removes the points, polylines, and labels from the Cesium scene.
 
-The useEffect hook is used to add or remove the measurement functionality based on the measureActive prop. When measureActive is true, the addHandler function is called to set up the measurement functionality. When measureActive is false or the component is unmounted, the removeMeasure function is called to clean up the measurement elements.
+The useEffect hook is used to add or remove the measurement functionality based on the `measureActive` prop. When `measureActive` is `true`, the `addHandler` function is called to set up the measurement functionality. When `measureActive` is `false` or the component is unmounted, the `removeMeasure` function is called to clean up the measurement elements.
 
 ## Authors
 
