@@ -12,7 +12,7 @@ import AreaPolygon from "./AreaPolygon";
 
 const mapViewParams = {
     projection: "EPSG:3857",
-    center: fromLonLat([16.450145, 44.515856]),
+    center: fromLonLat([15.9, 45.8]),
     zoom: 7,
     maxZoom: 18,
     minZoom: 3,
